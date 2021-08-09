@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 using sistema_prestamos_api.Models;
+using sistema_prestamos_api.Services;
 
 namespace sistema_prestamos_api
 {
@@ -35,8 +36,9 @@ namespace sistema_prestamos_api
 
             services.AddControllers();
 
-            services.AddTransient<AppDb>(_ => new AppDb(Configuration["ConnectionStrings:DefaultConnection"]));
-
+            services.AddTransient<AppDb>(_ => new AppDb(Configuration["ConnectionStrings:PrestamoAppCon"]));
+            services.AddTransient<IPrestamoService, PrestamoService>();
+            services.AddTransient<IEmpresaService, EmpresaService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

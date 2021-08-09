@@ -38,7 +38,6 @@ namespace sistema_prestamos_api.Controllers
         {
             string sqlDataSource = _configuration.GetConnectionString("PrestamoAppCon");
             int filas_afectadas = cli.Guardar_Datos_Clientes(sqlDataSource,cli);
-
             return Ok("Inserted Succesfully");
         }
 
