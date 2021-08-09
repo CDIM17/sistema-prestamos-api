@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
+using sistema_prestamos_api.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -21,31 +22,29 @@ namespace sistema_prestamos_api.Controllers
             _configuration = configuration;
         }
 
-
         [HttpGet]
         public JsonResult Get()
         {
-            string query = @"SELECT * FROM Cliente";
-            DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("PrestamoAppCon");
 
-            MySqlDataReader myReader;
+            Cliente cli = new Cliente();
+            DataTable data_employee = cli.Retornar_Datos_Clientes(sqlDataSource);
 
-            using (MySqlConnection mycon = new MySqlConnection(sqlDataSource))
-            {
-                mycon.Open();
-                using (MySqlCommand myCommand = new MySqlCommand(query, mycon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-
-                    myReader.Close();
-                    mycon.Close();
-                }
-            }
-
-            return new JsonResult(table);
+            return new JsonResult(data_employee);
         }
+
+
+        [HttpPost]
+        public JsonResult Post(Cliente cli)
+        {
+            string sqlDataSource = _configuration.GetConnectionString("PrestamoAppCon");
+            int filas_afectadas = cli.Guardar_Datos_Clientes(sqlDataSource,cli);
+
+            return new JsonResult("Inserted Succesfully");
+        }
+
+
+
 
     }
 }
