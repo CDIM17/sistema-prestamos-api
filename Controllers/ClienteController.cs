@@ -23,28 +23,24 @@ namespace sistema_prestamos_api.Controllers
         }
 
         [HttpGet]
-        public JsonResult Get()
+        public IActionResult Getallclientes()
         {
             string sqlDataSource = _configuration.GetConnectionString("PrestamoAppCon");
 
             Cliente cli = new Cliente();
             DataTable data_employee = cli.Retornar_Datos_Clientes(sqlDataSource);
 
-            return new JsonResult(data_employee);
+            return Ok(data_employee);
         }
 
-
-        [HttpPost]
-        public JsonResult Post(Cliente cli)
+        [HttpPost("addcliente")]
+        public IActionResult AddCliente(Cliente cli)
         {
             string sqlDataSource = _configuration.GetConnectionString("PrestamoAppCon");
             int filas_afectadas = cli.Guardar_Datos_Clientes(sqlDataSource,cli);
 
-            return new JsonResult("Inserted Succesfully");
+            return Ok("Inserted Succesfully");
         }
-
-
-
 
     }
 }

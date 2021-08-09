@@ -44,7 +44,7 @@ namespace sistema_prestamos_api.Models
         public int Guardar_Datos_Clientes(string sqlDataSource,Cliente cli)
         {
             string query = @"insert into Cliente(Cedula,Nombre, Apellido, Telefono, Correo,Direccion)
-VALUES(@Cedula,@Nombre,@Apellido,@Telefono,@Correo,@Direccion);";
+            VALUES(@Cedula,@Nombre,@Apellido,@Telefono,@Correo,@Direccion);";
 
             int filas_afectadas;
 
@@ -65,10 +65,7 @@ VALUES(@Cedula,@Nombre,@Apellido,@Telefono,@Correo,@Direccion);";
                     mycon.Close();
                 }
             }
-
             return filas_afectadas;
         }
-
-
     }
 }

@@ -26,6 +26,8 @@ namespace sistema_prestamos_api
                 c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
 
+            services.AddSwaggerGen();
+
             //JSON serializer
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore).
@@ -49,6 +51,12 @@ namespace sistema_prestamos_api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "NetCore3 API V1");
+            });
             app.UseRouting();
 
             app.UseAuthorization();
