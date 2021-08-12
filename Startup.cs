@@ -54,29 +54,12 @@ namespace sistema_prestamos_api
                 app.UseDeveloperExceptionPage();
             }
 
-            // app.UseSwagger();
-            /*
+             app.UseSwagger();
+
              app.UseSwaggerUI(c =>
              {
                  c.SwaggerEndpoint("/swagger/v1/swagger.json", "NetCore3 API V1");
-             });*/
-
-            app.UseSwagger(o =>
-            {
-                o.RouteTemplate = "docs/{documentName}/docs.json";
-            });
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
-            // specifying the Swagger JSON endpoint.
-            //This line enables Swagger UI, which provides us with a Nice, simple UI with which we can view our API calls.
-            app.UseSwaggerUI(c =>
-            {
-                c.RoutePrefix = "docs";
-                c.InjectStylesheet("/swagger-ui/custom.css");
-                c.InjectJavascript("../css/swagger-ui/custom.js");
-                c.SwaggerEndpoint("../docs/v1/docs.json", "API v1");
-                c.SwaggerEndpoint("../docs/v2/docs.json", "API V2");
-            });
-            app.UseStaticFiles();
+             });
 
             app.UseRouting();
 
