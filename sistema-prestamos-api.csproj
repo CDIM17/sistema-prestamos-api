@@ -3,7 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>sistema_prestamos_api</RootNamespace>
+    <UserSecretsId>c284bc56-8964-4dd6-aeeb-6db239bc3018</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="swagger-ui\**" />
+    <Content Remove="swagger-ui\**" />
+    <EmbeddedResource Remove="swagger-ui\**" />
+    <None Remove="swagger-ui\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.16" />

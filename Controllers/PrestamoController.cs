@@ -18,6 +18,16 @@ namespace sistema_prestamos_api.Controllers
             _prestamoService = prestamoService;
         }
 
+
+
+        [HttpGet("GetAllPrestamos")]
+        public IActionResult GetAllPrestamos()
+        {
+            var data_prestamos = _prestamoService.GetallPrestamos();
+            return Ok(data_prestamos);
+        }
+
+
         [HttpPost("addPrestamo")]
         public IActionResult AddPrestamo(Prestamo prestamo)
         {

@@ -5,21 +5,18 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace sistema_prestamos_api.Models
 {
-    public class Cliente
+    public class TipoPrestamo
     {
         public int Id { get; set; }
-        public string Cedula { get; set; }
-        public string Nombre {get; set;}
-        public string Apellido { get; set; }
-        public string Telefono { get; set; }
-        public string Correo { get; set; }
-        public string Direccion { get; set; }
+        public string Descripcion { get; set; }
+        public int TasaInteres { get; set; }
 
-        public DataTable Retornar_Datos_Clientes(string sqlDataSource)
+        public DataTable Retornar_Datos_Tipo_Prestamos(string sqlDataSource)
         {
-            string query = @"SELECT * FROM Cliente";
+            string query = @"SELECT * FROM TipoPrestamo";
 
             DataTable table = new DataTable();
 
@@ -41,10 +38,10 @@ namespace sistema_prestamos_api.Models
             return table;
         }
 
-        public int Guardar_Datos_Clientes(string sqlDataSource,Cliente cli)
+        public int Guardar_Tipo_Prestamo(string sqlDataSource, TipoPrestamo tp)
         {
-            string query = @"insert into Cliente(Cedula,Nombre, Apellido, Telefono, Correo,Direccion)
-            VALUES(@Cedula,@Nombre,@Apellido,@Telefono,@Correo,@Direccion);";
+            string query = @"insert into TipoPrestamo(Descripcion,TasaInteres)
+            VALUES(@Descripcion,@TasaInteres);";
 
             int filas_afectadas;
 
@@ -53,13 +50,9 @@ namespace sistema_prestamos_api.Models
                 mycon.Open();
                 using (MySqlCommand myCommand = new MySqlCommand(query, mycon))
                 {
-                    myCommand.Parameters.AddWithValue("@Cedula", cli.Cedula);
-                    myCommand.Parameters.AddWithValue("@Nombre", cli.Nombre);
-                    myCommand.Parameters.AddWithValue("@Apellido", cli.Apellido);
-                    myCommand.Parameters.AddWithValue("@Telefono", cli.Telefono);
-                    myCommand.Parameters.AddWithValue("@Correo", cli.Correo);
-                    myCommand.Parameters.AddWithValue("@Direccion", cli.Direccion);
-
+                    myCommand.Parameters.AddWithValue("@Descripcion", tp.Descripcion);
+                    myCommand.Parameters.AddWithValue("@TasaInteres", tp.TasaInteres);
+                    
                     filas_afectadas = myCommand.ExecuteNonQuery();
 
                     mycon.Close();
@@ -68,10 +61,9 @@ namespace sistema_prestamos_api.Models
             return filas_afectadas;
         }
 
-        public int Actualizar_Datos_Clientes(string sqlDataSource, Cliente cli)
+        public int Actualizar_Tipo_Prestamo(string sqlDataSource, TipoPrestamo tp)
         {
-            string query = "UPDATE Cliente SET Cedula = @Cedula, Nombre = @Nombre, Apellido = @Apellido, " +
-                " Telefono = @Telefono, Correo = @Correo, Direccion = @Direccion WHERE Id = @Id";
+            string query = "UPDATE TipoPrestamo SET Descripcion = @Descripcion, TasaInteres = @TasaInteres  WHERE Id = @Id";
 
             int filas_afectadas;
 
@@ -80,14 +72,10 @@ namespace sistema_prestamos_api.Models
                 mycon.Open();
                 using (MySqlCommand myCommand = new MySqlCommand(query, mycon))
                 {
-                    myCommand.Parameters.AddWithValue("@Id", cli.Id);
-                    myCommand.Parameters.AddWithValue("@Cedula", cli.Cedula);
-                    myCommand.Parameters.AddWithValue("@Nombre", cli.Nombre);
-                    myCommand.Parameters.AddWithValue("@Apellido", cli.Apellido);
-                    myCommand.Parameters.AddWithValue("@Telefono", cli.Telefono);
-                    myCommand.Parameters.AddWithValue("@Correo", cli.Correo);
-                    myCommand.Parameters.AddWithValue("@Direccion", cli.Direccion);
-
+                    myCommand.Parameters.AddWithValue("@Id", tp.Id);
+                    myCommand.Parameters.AddWithValue("@Descripcion", tp.Descripcion);
+                    myCommand.Parameters.AddWithValue("@TasaInteres", tp.TasaInteres);
+                    
                     filas_afectadas = myCommand.ExecuteNonQuery();
 
                     mycon.Close();
@@ -96,9 +84,9 @@ namespace sistema_prestamos_api.Models
             return filas_afectadas;
         }
 
-        public int Eliminar_Datos_Clientes(string sqlDataSource, int id)
+        public int Eliminar_Tipo_Prestamo(string sqlDataSource, int id)
         {
-            string query = "DELETE FROM Cliente WHERE Id = @Id";
+            string query = "DELETE FROM TipoPrestamo WHERE Id = @Id";
 
             int filas_afectadas;
 
@@ -108,7 +96,7 @@ namespace sistema_prestamos_api.Models
                 using (MySqlCommand myCommand = new MySqlCommand(query, mycon))
                 {
                     myCommand.Parameters.AddWithValue("@Id", id);
-                    
+
                     filas_afectadas = myCommand.ExecuteNonQuery();
 
                     mycon.Close();
@@ -116,5 +104,7 @@ namespace sistema_prestamos_api.Models
             }
             return filas_afectadas;
         }
+
+
     }
 }

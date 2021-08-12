@@ -13,51 +13,50 @@ namespace sistema_prestamos_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClienteController : ControllerBase
+    public class TipoPrestamoController : ControllerBase
     {
         private readonly IConfiguration _configuration;
 
-        public ClienteController(IConfiguration configuration)
+        public TipoPrestamoController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
         [HttpGet]
-        public IActionResult Getallclientes()
+        public IActionResult GetAllTipoPrestamos()
         {
             string sqlDataSource = _configuration.GetConnectionString("PrestamoAppCon");
 
-            Cliente cli = new Cliente();
-            DataTable data_employee = cli.Retornar_Datos_Clientes(sqlDataSource);
+            TipoPrestamo tp = new TipoPrestamo();
+            DataTable data_tipo_prestamos = tp.Retornar_Datos_Tipo_Prestamos(sqlDataSource);
 
-            return Ok(data_employee);
+            return Ok(data_tipo_prestamos);
         }
 
         [HttpPost]
-        public IActionResult AddCliente(Cliente cli)
+        public IActionResult AddTipoPrestamos(TipoPrestamo tp)
         {
             string sqlDataSource = _configuration.GetConnectionString("PrestamoAppCon");
-            int filas_afectadas = cli.Guardar_Datos_Clientes(sqlDataSource,cli);
+            int filas_afectadas = tp.Guardar_Tipo_Prestamo(sqlDataSource, tp);
             return Ok("Inserted Succesfully");
         }
 
         [HttpPut]
-        public IActionResult UpdateCliente(Cliente cli)
+        public IActionResult UpdateTipoPrestamo(TipoPrestamo tp)
         {
             string sqlDataSource = _configuration.GetConnectionString("PrestamoAppCon");
-            int filas_afectadas = cli.Actualizar_Datos_Clientes(sqlDataSource, cli);
+            int filas_afectadas = tp.Actualizar_Tipo_Prestamo(sqlDataSource, tp);
             return Ok("Updated Succesfully");
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteCliente(int id)
+        public IActionResult DeleteTipoPrestamo(int id)
         {
             string sqlDataSource = _configuration.GetConnectionString("PrestamoAppCon");
-            Cliente cli = new Cliente();
-            int filas_afectadas = cli.Eliminar_Datos_Clientes(sqlDataSource, id);
+            TipoPrestamo tp = new TipoPrestamo();
+            int filas_afectadas = tp.Eliminar_Tipo_Prestamo(sqlDataSource, id);
             return Ok("Deleted Succesfully");
         }
-
 
     }
 }
