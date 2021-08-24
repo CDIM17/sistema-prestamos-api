@@ -12,6 +12,10 @@ namespace sistema_prestamos_api.Services
     {
         DataTable GetallEmpresa();
         int AddEmpresa(Empresa empresa);
+
+        int UpdateEmpresa(Empresa empresa);
+
+        int DeleteEmpresa(int id);
     }
 
     public class EmpresaService : IEmpresaService
@@ -68,6 +72,52 @@ namespace sistema_prestamos_api.Services
                 }
             }
             return table;
+        }
+        public int UpdateEmpresa(Empresa empresa)
+        {
+            string query = "UPDATE Empresa SET RNC = @RNC ,Nombre = @Nombre, Telefono = @Telefono, Correo = @Correo, Direccion = @Direccion WHERE Id = @Id";       
+
+            int filas_afectadas;
+
+            using (MySqlConnection mycon = _sqlDataSource.Connection)
+            {
+                mycon.Open();
+                using (MySqlCommand myCommand = new MySqlCommand(query, mycon))
+                {
+                    myCommand.Parameters.AddWithValue("@Id", empresa.Id);
+                    myCommand.Parameters.AddWithValue("@RNC", empresa.RNC);
+                    myCommand.Parameters.AddWithValue("@Nombre", empresa.Nombre);
+                    myCommand.Parameters.AddWithValue("@Telefono", empresa.Telefono);
+                    myCommand.Parameters.AddWithValue("@Correo", empresa.Correo);
+                    myCommand.Parameters.AddWithValue("@Direccion", empresa.Direccion);
+
+                    filas_afectadas = myCommand.ExecuteNonQuery();
+
+                    mycon.Close();
+                }
+            }
+            return filas_afectadas;
+        }
+
+        public int DeleteEmpresa(int id)
+        {
+            string query = "DELETE FROM Empresa WHERE Id = @Id";
+
+            int filas_afectadas;
+
+            using (MySqlConnection mycon = _sqlDataSource.Connection)
+            {
+                mycon.Open();
+                using (MySqlCommand myCommand = new MySqlCommand(query, mycon))
+                {
+                    myCommand.Parameters.AddWithValue("@Id", id);
+
+                    filas_afectadas = myCommand.ExecuteNonQuery();
+
+                    mycon.Close();
+                }
+            }
+            return filas_afectadas;
         }
     }
 }

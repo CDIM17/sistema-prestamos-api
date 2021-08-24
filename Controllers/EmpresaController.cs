@@ -32,5 +32,18 @@ namespace sistema_prestamos_api.Controllers
             var filas_afectadas = _empresaService.AddEmpresa(empresa);
             return Ok(filas_afectadas);
         }
+        [HttpPut]
+        public IActionResult UpdateEmpresa(Empresa empresa)
+        {
+            int filas_afectadas = _empresaService.UpdateEmpresa(empresa);
+            return Ok("Updated Succesfully");
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteEmpresa(int id)
+        {
+            int filas_afectadas = _empresaService.DeleteEmpresa(id);
+            return Ok("Deleted Succesfully");
+        }
     }
 }
