@@ -57,7 +57,5 @@ namespace sistema_prestamos_api.Controllers
             int filas_afectadas = cli.Eliminar_Datos_Clientes(sqlDataSource, id);
             return Ok("Deleted Succesfully");
         }
-
-
     }
 }

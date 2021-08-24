@@ -18,8 +18,6 @@ namespace sistema_prestamos_api.Controllers
             _prestamoService = prestamoService;
         }
 
-
-
         [HttpGet("GetAllPrestamos")]
         public IActionResult GetAllPrestamos()
         {
@@ -34,6 +32,20 @@ namespace sistema_prestamos_api.Controllers
             if (prestamo is null) return NotFound();
             var filas_afectadas = _prestamoService.AddPrestamos(prestamo);
             return Ok(filas_afectadas);
+        }
+
+        [HttpPut]
+        public IActionResult UpdatePrestamo(Prestamo prestamo)
+        {
+            int filas_afectadas = _prestamoService.UpdatePrestamo(prestamo);
+            return Ok("Updated Succesfully");
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeletePrestamo(int id)
+        {
+            int filas_afectadas = _prestamoService.DeletePrestamo(id);
+            return Ok("Deleted Succesfully");
         }
     }
 }
